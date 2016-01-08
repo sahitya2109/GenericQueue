@@ -1,7 +1,9 @@
+import java.util.NoSuchElementException;
+
 class GenQueue<E> {
 
-    private QueueNode front;
-    private QueueNode rear;
+    private QueueNode<E> front;
+    private QueueNode<E> rear;
     private Integer nodeCount;
 
     private final Integer MAX_CAPACITY = 100;
@@ -14,9 +16,9 @@ class GenQueue<E> {
 
     public E front(){
         if(front != null){
-            return (E)front.elem;
+            return front.elem;
         }else {
-            return null;
+            throw new NoSuchElementException("Queue Undeflow");
         }
     }
 
@@ -24,7 +26,7 @@ class GenQueue<E> {
         if(nodeCount == MAX_CAPACITY){
             throw new RuntimeException("Queue Max Capacity Reached");
         }else{
-            QueueNode newNode = new QueueNode(e);
+            QueueNode<E> newNode = new QueueNode<E>(e);
             if(rear == null){
                 front = newNode;
                 rear = newNode;
@@ -38,7 +40,7 @@ class GenQueue<E> {
 
     public void dequeue(){
         if(this.isEmpty()){
-            throw new RuntimeException("Queue is Empty");
+            throw new NoSuchElementException("Queue is Empty");
         }else {
             if (nodeCount == 1){
                 front = null;
